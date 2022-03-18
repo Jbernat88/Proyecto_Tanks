@@ -10,23 +10,38 @@ public class followPlayer : MonoBehaviour
     private float yaw;
     private float pitch;
 
+    private float xRotation;
+    private float yRotation;
+
     public GameObject cabina;
+    public GameObject canon;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-        yaw += speedH * Input.GetAxis("Mouse X");
-        pitch += speedV * Input.GetAxis("Mouse Y") * Time.deltaTime;
-        pitch=Mathf.Clamp(pitch, -20, 0);
+        yaw = -speedH * Input.GetAxis("Mouse X");
+        pitch = speedV * Input.GetAxis("Mouse Y");
+        xRotation -= yaw;
+        xRotation=Mathf.Clamp(xRotation, -90, 90);
 
-        cabina.transform.Rotate(Vector3.up, yaw * Time.deltaTime);
-        //transform.Rotate(Vector3.right, pitch);
+        //cabina.transform.Rotate(Vector3.up, xRotation * Time.deltaTime);
+        cabina.transform.localRotation=Quaternion.Euler(0, xRotation, 0);
+
+        yRotation -= pitch;
+        yRotation = Mathf.Clamp(yRotation, -40, 40);
+
+      
+        canon.transform.localRotation = Quaternion.Euler(yRotation, 0, 0);
+
+
+
     }
+
 }

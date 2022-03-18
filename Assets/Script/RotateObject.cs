@@ -15,11 +15,7 @@ public class RotateObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Rotación de los objetos
-        
-      
-
-
-
+        forwardInput = Input.GetAxis("Vertical");
+        transform.Rotate(Vector3.right * speed * Time.deltaTime * forwardInput);
     }
 }

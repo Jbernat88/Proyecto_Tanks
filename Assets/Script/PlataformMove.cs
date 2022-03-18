@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlataformMove : MonoBehaviour
 {
-    public Transform[] target;
-    public float speed = 6f;
+    public GameObject Player;
+    public GameObject PLatform;
 
-    int curPos = 0;
-    int netxtPos = 1;
+
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +23,14 @@ public class PlataformMove : MonoBehaviour
 
     public void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+       
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(gameObject && collision.gameObject.CompareTag("Player"))
+        {
+            Player.transform.position = transform.position;
+        }
     }
 }

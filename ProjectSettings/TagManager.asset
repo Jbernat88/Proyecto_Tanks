@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Proyectil
+  - Castle
+  - Tank
+  - Undefined
+  - Enemy
+  - Wall
+  - Chest
+  - Bullet
+  - Money
   layers:
   - Default
   - TransparentFX
@@ -13,7 +22,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - PostProcessing
   - 
   - 
   - 

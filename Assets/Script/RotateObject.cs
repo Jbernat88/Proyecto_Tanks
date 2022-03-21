@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotateObject : MonoBehaviour
 {
-    public float speed = 30f;
+    public float speed = 80f;
     public float forwardInput;
     // Start is called before the first frame update
     void Start()
@@ -15,7 +15,12 @@ public class RotateObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        forwardInput = Input.GetAxis("Vertical");
-        transform.Rotate(Vector3.right * speed * Time.deltaTime * forwardInput);
+       
+      
+     //Las Ruedas giran cuando se accionan las teclas "Verticales"
+      forwardInput = Input.GetAxis("Vertical");
+      transform.Rotate(Vector3.right * speed * Time.deltaTime * forwardInput);
+        
+       
     }
 }

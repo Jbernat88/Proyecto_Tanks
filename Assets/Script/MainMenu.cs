@@ -18,12 +18,12 @@ public class MainMenu : MonoBehaviour
         
     }
 
-    public void GameScene()//Caraga el juego
+    public void LevelScene()//Caraga el juego
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Levels");
     }
 
-    public void Controls()
+    public void ControlsScene()
     {
         SceneManager.LoadScene("Controles");
     }

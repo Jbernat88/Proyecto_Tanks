@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DetectCollision : MonoBehaviour
 {
+    //Variables de las particulas
     public ParticleSystem particulas;
     public ParticleSystem wall;
     public ParticleSystem cofres;
     public ParticleSystem player;
+
+    private SoundManager soundManager;
 
     private void OnTriggerEnter(Collider otherCollider)
     {
@@ -19,6 +23,7 @@ public class DetectCollision : MonoBehaviour
 
             particulas = Instantiate(particulas, transform.position, particulas.transform.rotation);
             particulas.Play();
+            soundManager.SelecionAudio(3, 0.5f);
         }
 
         if (gameObject.CompareTag("Proyectil") && otherCollider.gameObject.CompareTag("Wall"))
@@ -28,6 +33,8 @@ public class DetectCollision : MonoBehaviour
 
             wall = Instantiate(wall, transform.position, wall.transform.rotation);
             wall.Play();
+
+            soundManager.SelecionAudio(1, 0.5f);
         }
 
         if (gameObject.CompareTag("Proyectil") && otherCollider.gameObject.CompareTag("Chest"))
@@ -48,6 +55,10 @@ public class DetectCollision : MonoBehaviour
             wall = Instantiate(wall, transform.position, wall.transform.rotation);
             wall.Play();
         }
+    }
 
+    private void Awake()
+    {
+        soundManager = FindObjectOfType<SoundManager>();
     }
 }

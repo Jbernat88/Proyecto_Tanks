@@ -21,7 +21,7 @@ public class followPlayer : MonoBehaviour
     void Start()
     {
         //Oculta el cursor cuando estamos en la pantalla de Play.
-        Cursor.lockState = CursorLockMode.Locked;
+       //Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame

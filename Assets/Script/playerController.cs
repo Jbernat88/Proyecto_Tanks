@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 
@@ -23,14 +25,19 @@ public class playerController : MonoBehaviour
     public HealthBar healthBar; //Variable de la barra de vida
 
     public bool GameOver;
+    public bool Victory;
 
     public ParticleSystem fireWorkParticleSystem; //Particulas de la moneda
-    private int monedasRecolectables = 0;
+ 
     public ParticleSystem explosionParticleSystem;
 
+
     public TextMeshProUGUI pointText;
-    private int score = 0;
+    public int score = 0;
+    public int maxScore = 30;
     public int points;
+
+    private SoundManager soundManager;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +49,20 @@ public class playerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameOver)//Caraga la pantalla de game over
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+
+        if (Victory)//carga la pantalla de victoria
+        {
+            SceneManager.LoadScene("Victory");
+        }
+        if (score == maxScore)//Cuando conseguimos todas las monedas ganamos
+        {
+            Victory = true;
+        }
+
         //Cuando el valor de la barra es 0 el juego finaliza
         if (currentHealth == 0)
         {
@@ -61,7 +82,7 @@ public class playerController : MonoBehaviour
             //Movimiento vertical y horizontal del player con las teclas
             horizontalInput = Input.GetAxis("Horizontal");
             verticalInput = Input.GetAxis("Vertical");
-
+           
             //Rotación Vertical del player
             transform.Rotate(Vector3.left * speed * Time.deltaTime * verticalInput);
 
@@ -69,18 +90,14 @@ public class playerController : MonoBehaviour
             transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime * horizontalInput);
         }
 
-        //Rotación Vertical del player
-        transform.Rotate(Vector3.left * speed * Time.deltaTime * verticalInput);
-
-        //Rotación Horizontal del player
-        transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime * horizontalInput);
-
         //Aparición del proyectil
         if (Input.GetKey(KeyCode.Mouse0) && IsCoolDown && !GameOver )
         {
             Instantiate(proyectil, canon.transform.position, canon.transform.rotation);
 
             StartCoroutine(CoolDown());
+
+            soundManager.SelecionAudio(0, 0.2f);
         }
 
     }
@@ -107,14 +124,12 @@ public class playerController : MonoBehaviour
             {
                 Destroy(otherCollider.gameObject);
 
-                monedasRecolectables++; //Cada vez que cogemos una moneda sumamos 1 en el marcador
-
-                Debug.Log(monedasRecolectables);
-
                 fireWorkParticleSystem.Play(); //Particualas
 
                 Instantiate(fireWorkParticleSystem, transform.position, explosionParticleSystem.transform.rotation);
                 UpdateScore(points); //Permite sumar los puntos de cada objeto
+
+                soundManager.SelecionAudio(2, 0.2f);
             }
         }
     }
@@ -130,9 +145,15 @@ public class playerController : MonoBehaviour
 
     public void UpdateScore(int pointsToAdd)
     {
-        score += pointsToAdd;//Linea per actualitzar l'score
-        pointText.text = $"Score: {score}/{pointText}";
+        score++;//Linea per actualitzar l'score
+        pointText.text = $"Coins: {score}/{maxScore}";
+
+        Debug.Log($"Tienes");
     }
 
+    private void Awake()
+    {
+        soundManager = FindObjectOfType<SoundManager>();
+    }
 
 }

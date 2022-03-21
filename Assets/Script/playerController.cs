@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
+
 
 public class playerController : MonoBehaviour
 {
@@ -24,6 +27,10 @@ public class playerController : MonoBehaviour
     public ParticleSystem fireWorkParticleSystem; //Particulas de la moneda
     private int monedasRecolectables = 0;
     public ParticleSystem explosionParticleSystem;
+
+    public TextMeshProUGUI pointText;
+    private int score = 0;
+    public int points;
 
     // Start is called before the first frame update
     void Start()
@@ -107,6 +114,7 @@ public class playerController : MonoBehaviour
                 fireWorkParticleSystem.Play(); //Particualas
 
                 Instantiate(fireWorkParticleSystem, transform.position, explosionParticleSystem.transform.rotation);
+                UpdateScore(points); //Permite sumar los puntos de cada objeto
             }
         }
     }
@@ -118,6 +126,12 @@ public class playerController : MonoBehaviour
              TakeDamage(5);
         }
 
+    }
+
+    public void UpdateScore(int pointsToAdd)
+    {
+        score += pointsToAdd;//Linea per actualitzar l'score
+        pointText.text = $"Score: {score}/{pointText}";
     }
 
 
